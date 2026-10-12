@@ -1,0 +1,12 @@
+.vscode/**
+.vscode-test/**
+src/**
+tsconfig.json
+esbuild.js
+.gitignore
+.git/**
+.github/**
+.antigravity/**
+*.vsix
+*.log
+**/*.map

@@ -1,0 +1,198 @@
+{
+  "name": "antigravity-kanban",
+  "displayName": "Antigravity Kanban & Ralph Loop",
+  "description": "Interactive Kanban Board and Autonomous Ralph Looping Agent with Model Selection for Antigravity & VS Code",
+  "version": "1.0.0",
+  "publisher": "proxomind",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warriorwizard/RalphLoop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/warriorwizard/RalphLoop/issues"
+  },
+  "homepage": "https://github.com/warriorwizard/RalphLoop#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Productivity",
+    "Project Management"
+  ],
+  "keywords": [
+    "kanban",
+    "ai",
+    "agent",
+    "ralph-loop",
+    "antigravity",
+    "task-board",
+    "autonomous-agent"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "antigravity-kanban-container",
+          "title": "Antigravity Kanban",
+          "icon": "media/kanban-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "antigravity-kanban-container": [
+        {
+          "id": "antigravity-kanban.sidebarView",
+          "name": "Kanban & Ralph Status",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "antigravity-kanban.openBoard",
+        "title": "Open Kanban Board",
+        "category": "Antigravity Kanban",
+        "icon": "$(project)"
+      },
+      {
+        "command": "antigravity-kanban.startRalphLoop",
+        "title": "Start Ralph Loop",
+        "category": "Antigravity Kanban",
+        "icon": "$(play)"
+      },
+      {
+        "command": "antigravity-kanban.pauseRalphLoop",
+        "title": "Pause Ralph Loop",
+        "category": "Antigravity Kanban",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "antigravity-kanban.stopRalphLoop",
+        "title": "Stop Ralph Loop",
+        "category": "Antigravity Kanban",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "antigravity-kanban.addTask",
+        "title": "Add Task to Board",
+        "category": "Antigravity Kanban",
+        "icon": "$(add)"
+      },
+      {
+        "command": "antigravity-kanban.refresh",
+        "title": "Reload from Disk",
+        "category": "Antigravity Kanban",
+        "icon": "$(refresh)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "antigravity-kanban.openBoard",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "antigravity-kanban.openBoard",
+          "when": "view == antigravity-kanban.sidebarView",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity-kanban.addTask",
+          "when": "view == antigravity-kanban.sidebarView",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity-kanban.refresh",
+          "when": "view == antigravity-kanban.sidebarView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Antigravity Kanban & Ralph Loop",
+      "properties": {
+        "antigravityKanban.defaultModel": {
+          "type": "string",
+          "default": "Gemini 3.8 Flash (High)",
+          "enum": [
+            "Gemini 3.8 Flash (High)",
+            "Gemini 3.8 Flash (Medium)",
+            "Gemini 3.8 Flash (Low)",
+            "Gemini 3.8 Flash",
+            "Claude Opus 4.6 (Thinking)",
+            "Claude Sonnet 4.6 (Thinking)",
+            "Gemini 3.1 Pro (High)",
+            "Gemini 3.1 Pro (Low)",
+            "Gemini 3 Flash",
+            "GPT-OSS 120B (Medium)",
+            "claude-3-7-sonnet",
+            "claude-3-5-sonnet",
+            "gpt-4o",
+            "gemini-2.0-flash",
+            "deepseek-r1",
+            "ollama-local",
+            "terminal-agent"
+          ],
+          "description": "Default AI model for Ralph Loop execution."
+        },
+        "antigravityKanban.executionMode": {
+          "type": "string",
+          "default": "antigravity",
+          "enum": [
+            "antigravity",
+            "direct-api",
+            "terminal-agent"
+          ],
+          "description": "Whether Ralph executes natively via Antigravity Code Editor, direct external APIs, or terminal agent."
+        },
+        "antigravityKanban.maxIterations": {
+          "type": "number",
+          "default": 5,
+          "description": "Maximum autonomous retry/refinement loops per task before pausing."
+        },
+        "antigravityKanban.defaultVerificationCommand": {
+          "type": "string",
+          "default": "",
+          "description": "Default automated verification command (e.g., 'npm test' or 'cargo test')."
+        },
+        "antigravityKanban.ollamaEndpoint": {
+          "type": "string",
+          "default": "http://127.0.0.1:11434",
+          "description": "Endpoint URL for local Ollama instances."
+        },
+        "antigravityKanban.customApiEndpoint": {
+          "type": "string",
+          "default": "https://api.deepseek.com/v1",
+          "description": "Custom OpenAI-compatible base URL."
+        },
+        "antigravityKanban.autoAdvance": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically pick and start the next Todo task when the current one is completed."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "vsce package --no-dependencies"
+  }
+}
